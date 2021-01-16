@@ -3,7 +3,7 @@ export function computeTriangulation(height, radius, segments) {
 
   for (let i = 0; i < segments; i++) {
     let triangle = {
-      'A': [0, 0, height],
+      'A': [0, 0, +height],
       'Pi': [
         radius * Math.cos(2 * Math.PI * i / segments),
         radius * Math.sin(2 * Math.PI * i / segments),

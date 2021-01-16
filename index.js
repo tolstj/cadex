@@ -13,8 +13,7 @@ server.use(bodyParser.json());
 
 server.post('/api', (req, res) => {
   const {height, radius, segments} = req.body;
-  console.log(computeTriangulation(height, radius, segments));
-  res.sendStatus(200);
+  res.json(computeTriangulation(height, radius, segments));
 });
 
 server.listen(port, host, function () {
