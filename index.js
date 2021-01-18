@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
-import { computeTriangulation } from './app/index.js';
+import { computeTriangulation } from './app/app.js';
 
 const __dirname = path.resolve();
 const server = express();

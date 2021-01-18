@@ -30,22 +30,35 @@ export function renderNewCone(triangulation) {
   clearThree(scene);
   triangulation.forEach((triangle) => {
     const geom = new THREE.Geometry();
-    const v1 = new THREE.Vector3(triangle.A[0], triangle.A[1], triangle.A[2]);
-    const v2 = new THREE.Vector3(triangle.Pi[0], triangle.Pi[1], triangle.Pi[2]);
-    const v3 = new THREE.Vector3(triangle['Pi+1'][0], triangle['Pi+1'][1], triangle['Pi+1'][2]);
 
-    geom.vertices.push(v1);
-    geom.vertices.push(v2);
-    geom.vertices.push(v3);
+    geom.vertices.push(
+      new THREE.Vector3(triangle.A.x, triangle.A.y, triangle.A.z),
+      new THREE.Vector3(triangle.Pi.x, triangle.Pi.y, triangle.Pi.z),
+      new THREE.Vector3(triangle['Pi+1'].x, triangle['Pi+1'].y, triangle['Pi+1'].z),
+    );
 
-    geom.faces.push(new THREE.Face3(0, 1, 2));
-    geom.computeFaceNormals();
+    const face = new THREE.Face3(0, 1, 2);
+    face.vertexNormals.push(
+      new THREE.Vector3(0, 0, 1),
+      new THREE.Vector3(triangle.Pi.normal.x, triangle.Pi.normal.y, triangle.Pi.normal.z),
+      new THREE.Vector3(triangle['Pi+1'].normal.x, triangle['Pi+1'].normal.y, triangle['Pi+1'].normal.z),
+    );
+    geom.faces.push(face);
 
-    const mesh = new THREE.Mesh(geom, new THREE.MeshNormalMaterial());
+    const mesh = new THREE.Mesh(geom, new THREE.MeshPhongMaterial({
+      color: 0x00FF00,
+      side: THREE.DoubleSide,
+    }));
     scene.add(mesh);
   });
-  const height = triangulation[0].A[2];
+
+  const height = triangulation[0].A.z;
   camera.position.z = height + 5;
+  const color = 0xFFFFFF;
+  const intensity = 1;
+  const light = new THREE.DirectionalLight(color, intensity);
+  light.position.set(5, 5, 5);
+  scene.add(light);
 }
 
 function clearThree(obj) {

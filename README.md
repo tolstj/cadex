@@ -1,0 +1,4 @@
+- ./index.js - express server
+- ./app/ - computations on server
+- ./client/ - static files for client
+- ./src/ - src code for client JS

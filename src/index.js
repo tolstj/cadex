@@ -9,7 +9,10 @@ const paramSegments = document.getElementById('paramSegments');
 const params = [paramHeight, paramRadius, paramSegments];
 const url = 'http://127.0.0.1:80/api';
 
-params.forEach((param) => param.value = 0);
+paramHeight.value = 1;
+paramRadius.value = 1;
+paramSegments.value = 3;
+
 formParameters.addEventListener('submit', (e) => {
   e.preventDefault();
   const height = paramHeight.value;
@@ -30,6 +33,7 @@ formParameters.addEventListener('submit', (e) => {
     .then(res => res.json())
     .then(res => {
       const triangulation = res;
+      console.log(triangulation);
       renderNewCone(triangulation);
     });
 });
